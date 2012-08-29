@@ -1,0 +1,8 @@
+{ "paths":
+   [ "scripts"
+   , "../src"
+   ]
+, "plugins":
+   [ "vector"
+   ]
+}

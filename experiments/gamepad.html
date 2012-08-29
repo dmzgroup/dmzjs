@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<script type="text/javascript">
+
+function gamepadConnected(e) {
+   var connect = document.getElementById("connect");
+   if (connect) {
+      connect.innerHTML="Gamepad Connected: " + e.gamepad.id;
+   }
+   else { throw "NO NODE FOUND!"; }
+}
+window.addEventListener("WebkitGamepadConnected", gamepadConnected, false);
+
+
+function poll() {
+   var ix = 0;
+   var jx = 0;
+   var info = document.getElementById("info");
+   var text = "";
+   var pad;
+   window.webkitRequestAnimationFrame(poll);
+   if (info && navigator && navigator.webkitGamepads) {
+      for (ix = 0; ix < navigator.webkitGamepads.length; ix++) {
+
+         pad = navigator.webkitGamepads[ix];
+         if (pad) {
+            text = "<code>"
+            text += "Controller[";
+            text += pad.id + "]: ";
+            text += " Buttons = ";
+            for (jy = 0; jy < pad.buttons.length; jy++) {
+               text += " " + pad.buttons[jy];
+            }
+            text += " Axes = ";
+            for (jy = 0; jy < pad.axes.length; jy++) {
+               text += (pad.axes[jy] > 0 ? "&nbsp;&nbsp;" : "&nbsp;") + pad.axes[jy].toFixed(3);
+            }
+            text += "</code>";
+            info.innerHTML = text;
+         }
+      }
+   }
+}
+
+window.webkitRequestAnimationFrame(poll);
+</script>
+<head>
+<title>DMZ.js: Gamepad API Test</title>
+<body>
+<div id="info">None Connected</div>
+<div id="connect">No Connected Callback received</div>
+</body>
+</html>
